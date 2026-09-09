@@ -272,8 +272,6 @@ python cdp.py shot                 # 截图存档
 python cdp.py tabs                 # 列出所有标签页
 ```
 
-与 `steer.py`（Playwright 版）的区别：`steer.py` 自己启动浏览器 → 带标记 → 表单加载不出来；`cdp.py` 只连接已有浏览器 → 无标记。**优先用 `cdp.py`。**
-
 ### 江苏实测正确入口（2026-09-09）
 
 直接在「江苏人社网办大厅」点「职称初定申报」推荐卡片可能不会跳转（SPA + 无 href）。实际可用的路径：
@@ -376,8 +374,6 @@ python cdp.py fill "电子邮箱" "x@x.com"
 | `eval <js>` | 执行任意 JS |
 | `shot [名称]` | 截图存档（含隐私，存 `.shots/` 已被 gitignore） |
 | `tabs` | 列出所有标签页 |
-
-> ⚠️ **关于 `steer.py` / `auto_apply.py`（旧版 Playwright 路径）**：这两个脚本用 Playwright 自己启动浏览器，会带 `--enable-automation`，导致 `navigator.webdriver === true`、申报表单永远停在「加载中」。它们已被 `cdp.py`（原生 Edge + 纯 CDP）取代，**不要再用于实际申报**，保留仅作历史参考。
 
 ### 已知坑（实测记录）
 

@@ -31,9 +31,7 @@
 │   └── jiangsu-walkthrough.md        # 江苏实测走查（路径、页面结构、SPA 踩坑清单）
 └── scripts/
     ├── zc.py                         # 零依赖 CLI：list / info / open / search
-    ├── cdp.py                        # 原生 Edge + 纯 CDP 接管（推荐）：launch/nav/text/click/frames/fields/fill/eval/shot/tabs
-    ├── steer.py                      # ⚠️ 旧版 Playwright 路径（已废弃：会触发 webdriver 检测导致表单不渲染）
-    ├── auto_apply.py                 # ⚠️ 旧版 Playwright 半自动（已废弃，同上）
+    ├── cdp.py                        # 原生 Edge + 纯 CDP 接管（唯一自动化方式）：launch/nav/text/click/frames/fields/fill/eval/shot/tabs
     └── profile.example.json          # 个人信息模板（复制为 profile.json 后填写）
 ```
 
