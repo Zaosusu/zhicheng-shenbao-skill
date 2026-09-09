@@ -1,0 +1,12 @@
+# 个人隐私：申报信息、登录会话、页面截图（含姓名/证件号），切勿提交
+profile.json
+.session/
+.shots/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# 系统
+.DS_Store
+Thumbs.db

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="hPUe7MnkZDwDFB6X5Fg3Ep">
+<head data-page-node-id="mqUp11Rg3HWnTRSS6KUU84">
+<meta charset="UTF-8" data-page-node-id="Cxr9kfPYuRPPmz5zpsMgG7">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="6L26cwtBZRkU2LoZ81q7oR">
+<title>全国职称申报官方入口导航</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --line:#e5e7eb; --text:#1f2937; --muted:#6b7280;
+    --primary:#2563eb; --primary-dark:#1d4ed8; --gov:#059669; --warn:#d97706; --risk:#dc2626;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.6; padding:24px 20px 60px;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+  header{margin-bottom:22px}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+  .sub{color:var(--muted);font-size:14px}
+  .stats{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+  .stat b{display:block;font-size:20px;color:var(--primary)}
+  .stat span{font-size:12px;color:var(--muted)}
+
+  .notice{
+    background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--warn);
+    border-radius:8px;padding:12px 16px;margin:18px 0;font-size:13px;color:#78350f;
+  }
+
+  .toolbar{
+    display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+    background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:20px;
+  }
+  #q{
+    flex:1;min-width:220px;padding:9px 13px;border:1px solid var(--line);border-radius:8px;
+    font-size:14px;font-family:inherit;outline:none;
+  }
+  #q:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .filters{display:flex;gap:6px;flex-wrap:wrap}
+  .fbtn{
+    padding:7px 13px;border:1px solid var(--line);background:#fff;border-radius:20px;
+    font-size:13px;cursor:pointer;color:var(--muted);font-family:inherit;transition:.15s;
+  }
+  .fbtn:hover{border-color:var(--primary);color:var(--primary)}
+  .fbtn.on{background:var(--primary);border-color:var(--primary);color:#fff}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:6px}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+
+  .region{margin-bottom:26px}
+  .region h2{
+    font-size:15px;font-weight:600;color:var(--muted);margin-bottom:12px;
+    padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;
+    display:flex;flex-direction:column;gap:9px;transition:.15s;
+  }
+  .card:hover{border-color:var(--primary);box-shadow:0 4px 14px rgba(37,99,235,.09);transform:translateY(-1px)}
+  .chead{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .cname{font-size:17px;font-weight:700}
+  .badge{font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:600}
+  .b-gov{background:#d1fae5;color:var(--gov)}
+  .b-http{background:#fef3c7;color:#b45309}
+  .b-nongov{background:#ffedd5;color:#c2410c}
+  .b-ip{background:#fee2e2;color:var(--risk)}
+  .csys{font-size:13px;color:#374151;font-weight:500}
+  .curl{
+    font-size:11.5px;color:var(--muted);word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace;
+    background:#f9fafb;padding:5px 8px;border-radius:6px;border:1px solid #f0f1f3;
+  }
+  .cnote{font-size:12.5px;color:var(--muted);flex:1}
+  .cbtns{display:flex;gap:8px;margin-top:2px}
+  .btn{
+    flex:1;text-align:center;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;
+    text-decoration:none;transition:.15s;border:1px solid transparent;
+  }
+  .btn-main{background:var(--primary);color:#fff}
+  .btn-main:hover{background:var(--primary-dark)}
+  .btn-alt{background:#fff;color:var(--muted);border-color:var(--line)}
+  .btn-alt:hover{border-color:var(--primary);color:var(--primary)}
+
+  footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  footer b{color:#374151}
+  .empty{text-align:center;padding:40px;color:var(--muted)}
+</style>
+</head>
+<body data-page-node-id="DGv3VZjA4u06kk9xo3kR4J">
+<div class="wrap" data-page-node-id="rsjTOljsp7fFbxDHsfSGLm">
+  <header data-page-node-id="K1kUFVjKgmApYUY7M1SmZf">
+    <h1 data-page-node-id="XUnCTulCLW1p1TSYf8Qidt">全国职称申报官方入口导航</h1>
+    <div class="sub" data-page-node-id="k3bYfUQjWoQwzb0uI4AuBX">覆盖 31 个省级行政区 + 新疆兵团 · 点击直达各省官方申报系统（初定 / 评审）</div>
+    <div class="stats" data-page-node-id="paTBt5Q6FxzYbWSo6Skvry">
+      <div class="stat" data-page-node-id="xLUNjn9L0tEsx0XYnitNVu"><b id="s-total" data-page-node-id="4fY4WjZwOb1WcHtQ2xYkFL">0</b><span data-page-node-id="wpHvfNuDZ5J6Ti8uPwN1zD">收录地区</span></div>
+      <div class="stat" data-page-node-id="Auf4E6dJocankNA5ef9BbU"><b id="s-gov" data-page-node-id="hdC0lzCgXbOKfY0cilEk7q">0</b><span data-page-node-id="K3vWnlAFR3ehEpBvUD33QT">官方 gov.cn 域名</span></div>
+      <div class="stat" data-page-node-id="wTWHj3zqEZS7Vl1u02CIuz"><b id="s-risk" data-page-node-id="erpdDStgu491EycZ7XTTZx">0</b><span data-page-node-id="zBtIIQdB66jCWPLmjnKRU7">IP / 非官方域名</span></div>
+    </div>
+  </header>
+
+  <div class="notice" data-page-node-id="J2UhZaeGUnd2Iq5OTIuFZB">
+    <b data-page-node-id="wmKdUFP99WGFwMzUgJqXeQ">申报前必读：</b>多数系统为<b data-page-node-id="pyE9uAhCJqibPhivQNSAnv">年度窗口开放</b>（一般 5–10 月，各省不同），非全年可申报；所有年限、材料、时间一律以<b data-page-node-id="Jz67x97KQdigAaKS6UIZYQ">当年评委会/人社厅正式通知</b>为准。
+    标注 IP 或非 gov 域名的入口虽经政府通知背书，但易变动，建议同时收藏兜底的省人社厅官网。
+  </div>
+
+  <div class="toolbar" data-page-node-id="kDFxQG7BlugTtdroVkElp7">
+    <input id="q" type="text" placeholder="搜索地区或系统名称，例如：江苏 / 初定 / 工程师" data-page-node-id="CPqA13w7FhXZ0MxhfCijAC">
+    <div class="filters" data-page-node-id="x5r7MQP52N3BCXCu1JtTfY">
+      <button class="fbtn on" data-f="all" data-page-node-id="U4gY4sHbszxnaVWTcojaUj">全部</button>
+      <button class="fbtn" data-f="gov" data-page-node-id="b4BaV7fNTTvhisLL8VYnlv">仅官方域名</button>
+      <button class="fbtn" data-f="risk" data-page-node-id="vbBkzpWSEn2hVcyA1yAAsy">含风险入口</button>
+    </div>
+  </div>
+
+  <div class="legend" data-page-node-id="9EMmE24UpGMQACnn0AH8BY">
+    <span data-page-node-id="MXm74CnAmdCGlr6wd8Zwzm"><i class="dot" style="background:var(--gov)" data-page-node-id="Ac2BVSvbfzRk9kruXAbgBS"></i>官方 .gov.cn 域名</span>
+    <span data-page-node-id="WwL7wm96UogfqyWcwslWrs"><i class="dot" style="background:#b45309" data-page-node-id="yrlEg4xXBkMAJe5nfa0UXB"></i>http 非加密</span>
+    <span data-page-node-id="BbGYH9NOAknHEctWvMinKL"><i class="dot" style="background:#c2410c" data-page-node-id="13DqP7JoaYfjPecFc1oPXF"></i>非 gov 域名</span>
+    <span data-page-node-id="Aw1mvDLdrR2stEcPtYMsdB"><i class="dot" style="background:var(--risk)" data-page-node-id="zSYoTaJpIFh4661FKYr7Qz"></i>IP 地址直连</span>
+  </div>
+
+  <div id="list" data-page-node-id="Qk0TRu1bjBpgingj2DZZBH"></div>
+
+  <footer data-page-node-id="R4m9W92ZMSjygul4uc4s0P">
+    <p data-page-node-id="FrC2yYMYK8XMT29bZR5v33"><b data-page-node-id="zVT7TnYGEX00h8J5eMdoqT">数据来源：</b>各省人社厅 / 行业主管厅局官网（.gov.cn）发布的 2025–2026 年度职称评审工作通知，由联网检索核实，未采信任何培训机构或中介页面。</p>
+    <p style="margin-top:8px" data-page-node-id="Ji79ardBKs9bpH3qZUFPQd"><b data-page-node-id="1MpgxzMsG8gj2MKlUoWAc9">免责：</b>政策与网址随时可能调整，点击后请以系统实际页面和当年官方通知为准。若发现失效链接，请更新 <code data-page-node-id="KK8HjEFmTxoSwnQRseJr2F">scripts/zc.py</code> 的 PORTALS 与本页 PORTALS 数组。</p>
+  </footer>
+</div>
+
+<script>
+const PORTALS = [
+  {r:'华北',n:'北京市',s:'北京市专业技术人员职称管理系统',u:'https://rsj.beijing.gov.cn/',b:'',t:'主入口在市人社局「个人办事 → 职称评审」；须先经单位账号审核推荐。2026 年个人网上申报窗口 7/7–7/30，电子证书在「本人资格证书查询」下载。',k:'gov'},
+  {r:'华北',n:'天津市',s:'天津市专业技术人才职称评审信息系统',u:'http://rzc.hrss.tj.gov.cn:8081/zcpsqd/home',b:'',t:'全流程网办（申报/审核/发证/查询），通过后在线下载电子证书。域名为 gov.cn，但协议为 http 非加密。',k:'http'},
+  {r:'华北',n:'河北省',s:'河北省专业技术职称申报评审信息系统',u:'http://111.63.208.196:8080/zcpsqd/home',b:'https://rst.hebei.gov.cn/',t:'须由单位先开户、逐级审核推荐。系统为 IP 地址直连，如失效请走人社厅官网「职称评审」专栏。',k:'ip'},
+  {r:'华北',n:'山西省',s:'山西省专业技术人才综合服务平台',u:'https://59.49.26.64:8750/zcpsqd/home',b:'https://rst.shanxi.gov.cn',t:'经省人社厅「人社一体化公共服务平台」进入。住建、自然资源等行业另有独立系统。',k:'ip'},
+  {r:'华北',n:'内蒙古自治区',s:'内蒙古人才信息库',u:'https://www.nmgrck.cn/',b:'',t:'自治区人社厅公告的全区唯一官方申报入口。须先注册、完善业绩档案并由工作单位审核通过。',k:'nongov'},
+
+  {r:'东北',n:'辽宁省',s:'按评委会分散（未确认统一入口）',u:'https://rst.ln.gov.cn/',b:'',t:'辽宁采取分系列、分评委会组织，未公布全省统一系统网址。请进入省人社厅官网后，按所申报系列查阅对应评委会通知。',k:'gov'},
+  {r:'东北',n:'吉林省',s:'吉林智慧人社网上办事大厅（职称申报评审及证书管理）',u:'https://zhrs.hrss.jl.gov.cn/jlzhrs/util/toIndex.do',b:'',t:'省人社厅公告的全省唯一官方渠道。证书在「我的证照」自行打印电子证。警惕各类「代办」虚假宣传。',k:'gov'},
+  {r:'东北',n:'黑龙江省',s:'黑龙江省职称服务平台（龙江职称在线）',u:'http://hljzc.renshenet.org.cn/',b:'https://hrss.hlj.gov.cn',t:'申报、审核、证书均须经此平台，结果上传人社部职称查询系统。域名非 gov.cn，建议同步收藏省人社厅官网。',k:'nongov'},
+
+  {r:'华东',n:'上海市',s:'上海市职称服务系统',u:'https://www.rsj.sh.gov.cn/zcps/zcpssb/index',b:'',t:'随申办 APP 扫码登录。各评委会按年度发文、申报时间分散，需看对应通知。',k:'gov'},
+  {r:'华东',n:'江苏省',s:'江苏人社网上办事服务大厅（职称初定/评审）',u:'https://rs.jshrss.jiangsu.gov.cn/index/',b:'https://www.jssrcfwypt.org.cn',t:'路径：个人办事 → 人才人事 → 专业技术人员管理服务 → 职称初定/评审。初定常年受理，通过后平台即时生成电子证（不发纸质）。',k:'gov'},
+  {r:'华东',n:'浙江省',s:'浙江省专业技术职务任职资格申报与评审管理服务平台',u:'https://zcps.rlsbt.zj.gov.cn/',b:'',t:'省厅声明为唯一平台。个人/单位账号同浙江政务服务网；单位须公示不少于 5 个工作日。',k:'gov'},
+  {r:'华东',n:'安徽省',s:'安徽省专业技术人员综合管理服务平台',u:'https://hrss.ah.gov.cn/',b:'',t:'入口：省人社厅首页「专题专栏 → 专技人员综合管理服务平台 → 职称申报」，经安徽政务服务网登录，需先完善个人业绩库。',k:'gov'},
+  {r:'华东',n:'福建省',s:'福建省职称申报评审管理平台',u:'http://220.160.52.235:9080',b:'',t:'网络申报 + 现场审核结合，经闽政通登录。逾期系统自动关闭，不补报。',k:'ip'},
+  {r:'华东',n:'江西省',s:'江西省专业技术人员职称申报评审系统',u:'https://hr.jxhrss.gov.cn/zcxt/',b:'',t:'申报、审查、缴费、评审、发证全流程网上办理。个人账号由所在单位创建。',k:'gov'},
+  {r:'华东',n:'山东省',s:'山东省专业技术人员管理服务平台',u:'https://117.73.253.239:9000/sdzc-web-ui/business/login/login.html',b:'',t:'全程网办，电子证书可在平台下载。系统为 IP 地址，也可从省人社厅官网「系统快捷入口」进入。',k:'ip'},
+
+  {r:'华中',n:'河南省',s:'河南省职称管理服务平台',u:'http://222.143.33.99:8083/zcsb',b:'',t:'单位账号分级创建，个人账号由单位创建。亦可从省人社厅官网「快捷通道 → 职称评审」进入。政策文件见 hnzjgl.gov.cn。',k:'ip'},
+  {r:'华中',n:'湖北省',s:'湖北省职称评审管理信息系统',u:'https://hbzcgl.hb12333.com/zcsh/app/home.html',b:'',t:'高/中/初级评审全部系统申报（中级初级认定暂走原渠道）。单位公示不少于 5 个工作日。',k:'nongov'},
+  {r:'华中',n:'湖南省',s:'湖南人社公共服务网上服务大厅（职称评审）',u:'https://ggfw.rst.hunan.gov.cn/hrss-pw-ui-hunan/',b:'',t:'智慧人社 APP / 电子社保卡扫码登录。资格审查材料网上提交，业绩材料线下报送。',k:'gov'},
+
+  {r:'华南',n:'广东省',s:'广东省专业技术人才职称管理系统',u:'https://ggfw.hrss.gd.gov.cn/gdweb/ggfw/web/pub/ggfwzyjs.do',b:'',t:'每年一次评审，错过等一年；业绩截止 12/31。电子证书在「粤省事」APP 下载，部分地市另设本地系统需同时填报。',k:'gov'},
+  {r:'华南',n:'广西壮族自治区',s:'广西专业技术人员职称管理服务平台',u:'https://my.gxrczc.com/Login',b:'',t:'全区统一入口，由自治区人才市场承办。部分系列归口中国广西人才市场评委会，需完成继续教育公需科目。',k:'nongov'},
+  {r:'华南',n:'海南省',s:'海南省职称评审管理信息系统',u:'https://202.100.247.254:8001/zcps/',b:'',t:'线上线下同步。个人账号须在单位注册后由单位建号。',k:'ip'},
+
+  {r:'西南',n:'重庆市',s:'重庆市专业技术人员服务平台（渝才荟）',u:'https://ggfw.rlsbj.cq.gov.cn/cqzyjsrcw/positional-portal-web/',b:'https://rlsbj.cq.gov.cn/ywzl/zjrc/',t:'通过「渝才荟」应用、渝快办登录。按评委会分散，中初级由区县评委会另行通知。',k:'gov'},
+  {r:'西南',n:'四川省',s:'四川省职称评审信息系统',u:'http://103.203.218.251:8081/zcpsqd/',b:'https://rst.sc.gov.cn/',t:'按评委会分散（系统内选相应高评委），单位 + 个人双账号。成都、绵阳等部分市州有独立系统。',k:'ip'},
+  {r:'西南',n:'贵州省',s:'贵州省人才人事综合业务管理服务平台（职称评审子系统）',u:'https://rcrs.gzsrs.cn:9999/',b:'https://rst.guizhou.gov.cn/ztzl/tjgzxyfwgzrcgzzcyzsbl/',t:'账号实人制，系统自动匹配评委会，扫码缴费。7/1 起开放填报。',k:'nongov'},
+  {r:'西南',n:'云南省',s:'云南省专业技术人才管理服务信息平台',u:'https://hrss.yn.gov.cn/zjgl/',b:'',t:'个人须先绑定用人单位账号。按系列/评委会分散，全程在线申报评审。',k:'gov'},
+  {r:'西南',n:'西藏自治区',s:'西藏自治区专业技术人员公共服务平台',u:'http://221.13.83.35:8001/ggfwpt/xz/home',b:'https://hrss.xizang.gov.cn/',t:'线上申报 + 线下交纸质原件结合。按系列/评委会/地市分散。',k:'ip'},
+
+  {r:'西北',n:'陕西省',s:'陕西省职称网上申报系统',u:'https://rszwfw.qinyunjiuye.cn/zcsb/',b:'https://rst.shaanxi.gov.cn/',t:'无统一省级入口，按评委会/地市分散组织。系统账号由单位或主管部门向省人社厅申请。',k:'nongov'},
+  {r:'西北',n:'甘肃省',s:'甘肃省职称申报评审管理信息系统',u:'https://gszcxt.rst.gansu.gov.cn/',b:'https://rst.gansu.gov.cn/',t:'个人申报窗口 9/1 0:00 – 9/30 24:00。电子证书可下载，另公共服务平台 wsbs.rst.gansu.gov.cn:8089 可办证书下载。',k:'gov'},
+  {r:'西北',n:'青海省',s:'青海省「互联网+人事人才」职称申报评审系统',u:'https://qhrsggfw.org.cn/rsrc/zcsb',b:'https://rst.qinghai.gov.cn/',t:'诚信承诺制，全程网办，线下结果一律不予认可。',k:'nongov'},
+  {r:'西北',n:'宁夏回族自治区',s:'宁夏人社公共服务系统 — 职称评审',u:'https://12333.hrss.nx.gov.cn/nxggfw/nxggfw/',b:'',t:'2026 年全面启用新系统。线上填报 + 纸质材料报送，按系列/评委会分散。',k:'gov'},
+  {r:'西北',n:'新疆维吾尔自治区',s:'新疆专业技术人员管理平台',u:'https://www.xjzcsq.com',b:'',t:'由自治区人才服务中心运营，全区通用。按评委会选择申报，建议同步关注自治区人社厅公告。',k:'nongov'},
+  {r:'西北',n:'新疆生产建设兵团',s:'兵团专业技术人员服务网',u:'http://rsrc.xjbthrss.cn:19001',b:'',t:'全兵团统一系统，副高及以上须答辩。注册账号与查《职称评审专业目录》另走 xjbt.yxlearning.com。',k:'ip'}
+];
+
+const REGIONS = ['华北','东北','华东','华中','华南','西南','西北'];
+const BADGE = {
+  gov:['官方域名','b-gov'], http:['http 非加密','b-http'],
+  nongov:['非 gov 域名','b-nongov'], ip:['IP 直连','b-ip']
+};
+const el = s => document.querySelector(s);
+
+function stat(){
+  el('#s-total').textContent = PORTALS.length;
+  el('#s-gov').textContent = PORTALS.filter(p=>p.k==='gov'||p.k==='http').length;
+  el('#s-risk').textContent = PORTALS.filter(p=>p.k==='ip'||p.k==='nongov').length;
+}
+
+function render(q='', f='all'){
+  const kw = q.trim().toLowerCase();
+  let out = '';
+  REGIONS.forEach(reg=>{
+    const items = PORTALS.filter(p=>{
+      if(p.r!==reg) return false;
+      if(f==='gov' && !(p.k==='gov'||p.k==='http')) return false;
+      if(f==='risk' && !(p.k==='ip'||p.k==='nongov')) return false;
+      if(kw && !((p.n+p.s+p.t).toLowerCase().includes(kw))) return false;
+      return true;
+    });
+    if(!items.length) return;
+    out += `<div class="region"><h2>${reg} · ${items.length}</h2><div class="grid">`;
+    items.forEach(p=>{
+      const [btxt,bcls] = BADGE[p.k];
+      const backup = p.b ? `<a class="btn btn-alt" href="${p.b}" target="_blank" rel="noopener">人社厅官网</a>` : '';
+      out += `<div class="card">
+        <div class="chead"><span class="cname">${p.n}</span><span class="badge ${bcls}">${btxt}</span></div>
+        <div class="csys">${p.s}</div>
+        <div class="curl">${p.u}</div>
+        <div class="cnote">${p.t}</div>
+        <div class="cbtns">
+          <a class="btn btn-main" href="${p.u}" target="_blank" rel="noopener">前往申报 →</a>
+          ${backup}
+        </div>
+      </div>`;
+    });
+    out += `</div></div>`;
+  });
+  el('#list').innerHTML = out || `<div class="empty">没有匹配的地区，换个关键词试试</div>`;
+}
+
+el('#q').addEventListener('input', e=>render(e.target.value, el('.fbtn.on').dataset.f));
+document.querySelectorAll('.fbtn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    render(el('#q').value, b.dataset.f);
+  });
+});
+
+stat();
+render();
+</script>
+</body>
+</html>
