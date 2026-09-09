@@ -197,7 +197,7 @@
 |------|------|------|
 | **可视化导航**（推荐给终端用户） | `references/national-portals.html` | 浏览器打开，按大区分组、带搜索与风险筛选，点击直达 |
 | **命令行直达** | `scripts/zc.py` | 零依赖，`python zc.py open 江苏` |
-| **自动化辅助** | `scripts/auto_apply.py` | 见第十五节 |
+| **浏览器自动化（半自动·不代提交）** | `scripts/cdp.py` | 原生 Edge + 纯 CDP，见第十五节 |
 
 ### CLI 常用命令
 ```bash
@@ -222,6 +222,9 @@ python zc.py search 工程师          # 关键词搜索
 
 ## 十五、浏览器自动化申报（半自动 · 不代提交）
 
+> **⚠️ 适用范围（重要）：本节「江苏实测正确入口」「填表演示与要点」中的入口网址、SSO 路径、表单字段 id（如 `jbxx_aac003`）、iframe 嵌套结构，全部是**江苏省人才服务云平台**的实测结果，**仅适用于江苏，不代表其他省份**。**
+> 各省职称平台是**完全不同的系统**（域名、登录、表单字段名、iframe 结构都不同），不能互相套用。本 skill 的 `cdp.py` **工具本身是通用的（纯 CDP 遥控器，与地域无关）**，但每一个省份都需要单独「踩点」出自己的入口与字段清单，并像 `references/jiangsu-walkthrough.md` 那样沉淀成该省专属的 walkthrough。换省时请按本节思路重新踩点，不要假设字段一致。
+
 ### 能自动化到什么程度
 | 环节 | 能否自动化 | 说明 |
 |------|-----------|------|
@@ -232,19 +235,79 @@ python zc.py search 工程师          # 关键词搜索
 | **点击提交** | ❌ **绝不自动** | 申报涉及本人诚信承诺，必须本人逐项复核后手动提交 |
 
 ### 环境准备
+
+> **先说结论：不要用 Playwright / Selenium 去「启动」浏览器。** 原因见下方踩坑记录，这是本 skill 实测中最重要的一个坑。
+
 ```bash
-pip install playwright          # 只装库，浏览器内核复用本机 Edge，不用下载 Chromium
-cp profile.example.json profile.json   # 填写个人信息（该文件已被 .gitignore 排除）
+pip install websocket-client     # 唯一依赖，纯 CDP 客户端，不引入 Playwright/Selenium
 ```
 
-### 用法
+### ⚠️ 头号踩坑：自动化框架启动的浏览器无法加载申报表单
+
+| 启动方式 | `navigator.webdriver` | 结果 |
+|----------|----------------------|------|
+| Playwright / Selenium 启动 | `true`（带 `--enable-automation`） | 申报表单容器不渲染，**永远停在「加载中」** |
+| 手动启动原生 Edge（只加 `--remote-debugging-port`） | `false` | 页面正常 |
+
+政务申报站会检测自动化标记并拒绝渲染表单内容。**这是表单打不开的真正原因，不是浏览器坏了，也不是"申报过了不让报"。**
+
+### 正确姿势：原生 Edge + 纯 CDP 客户端
+
+浏览器由系统原生启动（零自动化参数），脚本只作为"遥控器"通过 CDP 协议连上去：
+
 ```bash
-python auto_apply.py 江苏                  # 打开入口，持久化会话
-python auto_apply.py 江苏 --fill           # 登录后自动填入 profile.json 的信息
-python auto_apply.py 江苏 --fill --hold     # 填完保持浏览器打开，人工复核
-python auto_apply.py 江苏 --reset           # 清除登录态重新登录
-python auto_apply.py 江苏 --headless        # 无界面（部分政务站点会拦截）
+# 1. 手动/脚本启动原生 Edge（不要带任何 --enable-automation 类参数）
+msedge.exe --remote-debugging-port=9222 --user-data-dir=<专用目录>
+
+# 2. 用 cdp.py 驱动
+python cdp.py launch 江苏          # 启动原生 Edge 并打开该地区申报入口
+python cdp.py nav <url>            # 打开网址
+python cdp.py text                 # 页面纯文本（判断页面状态最可靠）
+python cdp.py click <文本>          # 按文本点击（真实鼠标事件，SPA 必需）
+python cdp.py frames               # 列出 iframe（判断申报表单是否渲染）
+python cdp.py fields               # 下钻到最深 iframe，列出所有可填字段
+python cdp.py fill "电子邮箱" "xxx"  # 按 label/id/name 模糊匹配填写一个字段
+python cdp.py eval <js>            # 执行任意 JS
+python cdp.py shot                 # 截图存档
+python cdp.py tabs                 # 列出所有标签页
 ```
+
+与 `steer.py`（Playwright 版）的区别：`steer.py` 自己启动浏览器 → 带标记 → 表单加载不出来；`cdp.py` 只连接已有浏览器 → 无标记。**优先用 `cdp.py`。**
+
+### 江苏实测正确入口（2026-09-09）
+
+直接在「江苏人社网办大厅」点「职称初定申报」推荐卡片可能不会跳转（SPA + 无 href）。实际可用的路径：
+
+1. 打开 **江苏省人才服务云平台**：`https://www.jssrcfwypt.org.cn/web/cdsu/rcbs/zc?areaCode=null`
+2. 点分类「**职称**」
+3. 在「职称初定申报」卡片上点「**在线办理**」
+4. 系统会经 SSO 跳转到 `rs.jshrss.jiangsu.gov.cn/web/functionAuth?...`
+5. 授权页内嵌 iframe：`tobusiness?code=...` → 再内嵌 `UTP?utcName=Cd_TitleDeclarationApply`
+6. 表单真实内容在第 2 层 iframe 里，用 `cdp.py frames` 能看到 `UTP` 帧即表示渲染成功
+
+> 注意：云平台 SSO 后可能弹出 **腾讯滑块验证码 iframe**，这是安全策略，不是脚本问题。
+
+### 填表演示与要点
+
+江苏表单实测有 28 个可填字段（基本信息层），例如：
+
+| 字段标签 | 元素 id | 类型 |
+|---|---|---|
+| 姓名 | `jbxx_aac003` | text（只读/已预填） |
+| 移动电话 | `jbxx_aac067` | text |
+| 电子邮箱 | `jbxx_aae159` | text |
+| 现从事专业 | `jbxx_bgc205` | search（下拉选择器） |
+| 申报级别 | `sbxx_age278` | search（下拉选择器） |
+| 申报专业 | `sbxx_aac183` | search（下拉选择器） |
+
+`cdp.py fill "电子邮箱" "xxx@xxx.com"` 会：
+1. 自动下钻到最深层的表单 iframe
+2. 按 label/id/name 找到字段
+3. `focus` + `Ctrl+A` 全选
+4. 发送完整 `keyDown/char/keyUp` 事件序列
+5. React 受控组件可正确识别并更新 value
+
+> 普通文本框用 `fill` 可直接写入；`search`/`select` 等下拉选择器建议先用 `cdp.py fields` 确认是选择器，再人工点开选择，避免填无效值。
 
 ### 关键设计
 - **会话持久化**：登录态存在 `scripts/.session/<地区>/`，第二次运行免登录——这是自动化申报最大的效率点。
@@ -268,54 +331,62 @@ python auto_apply.py 江苏 --headless        # 无界面（部分政务站点�
 | 环节 | 谁来做 | 说明 |
 |------|--------|------|
 | 确认申报省份/层级/路径 | 助手判断，人拍板 | 用第二、四节的条件表给出建议 |
-| 打开官方申报系统 | 助手（全自动） | `zc.py open` 或 `steer.py serve` |
+| 打开官方申报系统 | 助手（全自动） | `zc.py open` 或 `cdp.py launch` |
 | 扫码/实人登录 | **人** | 政务系统强制实名，无法绕过 |
-| 看懂页面、找申报入口 | 助手 | `steer.py text` / `dom` 读取页面 |
+| 看懂页面、找申报入口 | 助手 | `cdp.py text` / `frames` 读取页面 |
 | 分析该填什么、材料是否齐 | 助手 | 对照第六节材料清单 |
-| 表单录入 | 助手（自动填）+ 人核对 | `auto_apply.py --fill`，未匹配字段人工补 |
+| 表单录入 | 助手（自动填）+ 人核对 | `cdp.py fields` + `cdp.py fill`，未匹配字段人工补 |
 | 上传佐证/盖章件 | **人** | 涉及原件扫描 |
 | **点击提交** | **人** | 涉及诚信承诺，必须本人确认 |
 
-### 标准六步流程
+### 标准六步流程（基于 cdp.py · 原生 Edge + 纯 CDP）
 
 ```bash
 # 1. 助手：确认该地区入口
 python zc.py info 江苏
 
-# 2. 助手：启动浏览器并打开（保持等待）
-python steer.py serve 江苏
+# 2. 助手：原生启动 Edge（不带任何自动化参数）并打开入口，保持等待
+python cdp.py launch 江苏
 
-# 3. 人：在浏览器里扫码登录
+# 3. 人：在弹出的原生 Edge 里扫码/账号登录（登录态持久化，后续免登录）
 
-# 4. 助手：读取页面判断是否登录成功 / 找到入口
-python steer.py text
-python steer.py click "职称初定申报"
+# 4. 助手：读取页面状态、找申报入口
+python cdp.py text                 # 看页面文本，判断是否登录成功
+python cdp.py click "在线办理"      # 按文本真实点击（SPA 必需）
 
-# 5. 助手：读取表单结构，按需填写
-python steer.py dom
-python steer.py fill 姓名 张三
+# 5. 助手：下钻表单、读取结构、按需填写（绝不点提交）
+python cdp.py frames               # 确认表单 iframe（如 UTP 帧）已渲染
+python cdp.py fields               # 列出可填字段
+python cdp.py fill "电子邮箱" "x@x.com"
 
-# 6. 人：复核全部内容 → 手动提交
+# 6. 人：逐项复核 → 手动点击提交（助手绝不自动提交）
 ```
 
-### steer.py 命令速查
+### 命令速查（cdp.py）
 
 | 命令 | 作用 |
 |------|------|
-| `serve <地区>` | 启动 Edge 并打开申报入口（带调试端口，保持等待） |
-| `text` | 输出页面纯文本（**判断页面状态最可靠**，SPA 站点优先用） |
-| `dom` | 列出页面可见表单/按钮结构 |
-| `click <文本>` | 按文本点击（用真实鼠标事件，SPA 才生效） |
-| `fill <关键词> <值>` | 按 name/id/placeholder 模糊匹配填输入框 |
-| `shot` | 截图存档 |
-| `url [目标]` | 查看/跳转到指定网址 |
+| `launch [地区]` | 原生启动 Edge（无自动化标记）并打开该地区申报入口 |
+| `nav <url>` | 打开网址 |
+| `text [--limit N]` | 输出页面纯文本（**判断页面状态最可靠**，SPA 优先用） |
+| `click <文本>` | 按文本真实鼠标点击（SPA 才生效） |
+| `frames` | 列出所有 iframe（判断申报表单是否渲染） |
+| `fields [--limit N]` | 下钻到最深表单层，列出可填字段 |
+| `fill "关键词" "值"` | 按 label/id/name 模糊匹配填一个字段（不提交） |
+| `eval <js>` | 执行任意 JS |
+| `shot [名称]` | 截图存档（含隐私，存 `.shots/` 已被 gitignore） |
+| `tabs` | 列出所有标签页 |
+
+> ⚠️ **关于 `steer.py` / `auto_apply.py`（旧版 Playwright 路径）**：这两个脚本用 Playwright 自己启动浏览器，会带 `--enable-automation`，导致 `navigator.webdriver === true`、申报表单永远停在「加载中」。它们已被 `cdp.py`（原生 Edge + 纯 CDP）取代，**不要再用于实际申报**，保留仅作历史参考。
 
 ### 已知坑（实测记录）
 
-1. **SPA 站点点击不跳转**：政务站大量元素无 `href`、事件 JS 动态绑定。不要用 `JS .click()`，必须用 `locator.click()`（真实鼠标事件）；判断页面变化看 **DOM 内容**而非 URL。
-2. **登录态可能丢失**：浏览器实例异常退出会导致 session 未正常落盘，`serve` 重启后需重新扫码。属正常现象，重新登录即可。
-3. **调试端口失效**：打开某些弹窗/表单后，`--remote-debugging-port` 可能失效，表现为 CDP 连不上。处理：`TaskStop` 停掉 serve → 重新 `steer.py serve`。
-4. **搜索框/浮层遮挡**：`fill()` 超时通常是元素被浮层挡住，先关掉弹层再填。
-5. **同一业务不可重复申报**：已办结的职称初定无法再次发起，测试新表单需换可申报的层级（如中级）。
+1. **SPA 站点点击不跳转**：政务站大量元素无 `href`、事件 JS 动态绑定。不要用 JS `.click()`，必须用 `cdp.py click`（真实鼠标事件）；判断页面变化看 **DOM/iframe 内容**而非 URL。
+2. **表单「加载中」是 webdriver 检测**：用 Playwright/Selenium 启动浏览器会触发，必须改用原生 Edge + CDP（见第十五节头号踩坑）。
+3. **登录态可能丢失**：浏览器实例异常退出会导致 session 未正常落盘，重启后需重新登录。属正常现象。
+4. **调试端口失效**：打开某些弹窗/表单后 `--remote-debugging-port` 可能失效，表现为 CDP 连不上。处理：关掉 Edge → 重新 `cdp.py launch`。
+5. **表单字段被浮层遮挡**：`fill` 失败通常是元素被浮层挡住，先关掉弹层再填。
+6. **同一业务不可重复申报**：已办结的职称初定无法再次发起，测试新表单需换可申报的层级（如中级）。
+7. **跨省份不可套用字段**：各省表单字段名、iframe 结构完全不同，换省必须重新踩点（见本节开头适用范围）。
 
-> 更详细的江苏实测记录见 `references/jiangsu-walkthrough.md`。
+> 更详细的江苏实测记录见 `references/jiangsu-walkthrough.md`。其他省份踩点后也请沉淀成 `references/<省份>-walkthrough.md`。

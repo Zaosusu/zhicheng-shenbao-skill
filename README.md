@@ -31,8 +31,9 @@
 │   └── jiangsu-walkthrough.md        # 江苏实测走查（路径、页面结构、SPA 踩坑清单）
 └── scripts/
     ├── zc.py                         # 零依赖 CLI：list / info / open / search
-    ├── steer.py                      # CDP 接管器：serve / text / dom / click / fill / shot / url
-    ├── auto_apply.py                 # 半自动申报：持久化登录 + 自动填表（不代提交）
+    ├── cdp.py                        # 原生 Edge + 纯 CDP 接管（推荐）：launch/nav/text/click/frames/fields/fill/eval/shot/tabs
+    ├── steer.py                      # ⚠️ 旧版 Playwright 路径（已废弃：会触发 webdriver 检测导致表单不渲染）
+    ├── auto_apply.py                 # ⚠️ 旧版 Playwright 半自动（已废弃，同上）
     └── profile.example.json          # 个人信息模板（复制为 profile.json 后填写）
 ```
 
@@ -58,19 +59,24 @@ python zc.py search 工程师           # 关键词搜索
 
 ### 2. 想让助手帮你填表 → 人机协同
 
+> ⚠️ **关键前提**：浏览器必须**原生启动**（系统 Edge + `--remote-debugging-port`，不带任何自动化参数）。
+> 用 Playwright/Selenium 启动会触发 `navigator.webdriver` 检测，申报表单永远停在「加载中」。详见 SKILL.md 第十五节。
+
 ```bash
-pip install playwright        # 只装库，浏览器内核复用本机 Edge
-cp scripts/profile.example.json scripts/profile.json   # 填好个人信息
+pip install websocket-client   # 唯一依赖：纯 CDP 客户端，不引入 Playwright/Selenium
+cp scripts/profile.example.json scripts/profile.json   # 填好个人信息（已被 .gitignore 排除）
 
 # 下面这些由助手执行，你只管登录和最后提交
-python steer.py serve 江苏    # 启动 Edge 打开申报入口（保持等待）
+python cdp.py launch 江苏     # 原生启动 Edge 并打开申报入口（保持等待）
 # → 你在弹出的浏览器里扫码登录
-python steer.py text          # 助手读页面判断是否登录成功
-python steer.py click "职称初定申报"
-python steer.py dom           # 助手读取表单结构
-python steer.py fill 姓名 张三
+python cdp.py text            # 助手读页面判断是否登录成功
+python cdp.py click "在线办理"
+python cdp.py fields          # 助手读取表单字段
+python cdp.py fill "电子邮箱" "x@x.com"
 # → 你复核后手动点提交
 ```
+
+> 以上入口/字段是**江苏省**实测结果，详见 `references/jiangsu-walkthrough.md`；换省份需重新踩点，不能套用。
 
 ### 3. 只想了解申报政策 → 读 SKILL.md
 
